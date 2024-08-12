@@ -17,8 +17,8 @@ export const TAB_FORM_1 = [
     component: InputText,
   },
   {
-    header: "Drop Down",
-    component: SubTab2OnTab1,
+  	header: "Currency Input",
+  	component: SubTab3OnTab2,
   },
 ];
 
@@ -27,14 +27,10 @@ export const TAB_FORM_2 = [
     header: "Date Picker",
     component: SubTab1OnTab2,
   },
-  {
-  	header: "Combo Box",
-  	component: SubTab2OnTab2,
-  },
-  {
-  	header: "Currency Input",
-  	component: SubTab3OnTab2,
-  },
+	{
+		header: "Date Range Picker",
+		component: DateRange,
+	},
 ];
 
 export const TAB_FORM_3 = [
@@ -42,14 +38,19 @@ export const TAB_FORM_3 = [
 		header: "Radio Button",
 		component: Radio,
 	},
-	{
-		header: "Date Range Picker",
-		component: DateRange,
-	},
-	{
-		header: "Show Modal",
-		component: Modal,
-	},
+  
+  {
+  	header: "Combo Box",
+  	component: SubTab2OnTab2,
+  },
+  {
+    header: "Drop Down",
+    component: SubTab2OnTab1,
+  },
+  {
+    header: "Checkbox",
+    component: SubTabSimulation1,
+  },
 ];
 
 export const TAB_FORM_4 = [
@@ -58,7 +59,7 @@ export const TAB_FORM_4 = [
 		component: Table,
 	},
   {
-    header: "Checkbox",
-    component: SubTabSimulation1,
-  },
+		header: "Show Modal",
+		component: Modal,
+	},
 ];

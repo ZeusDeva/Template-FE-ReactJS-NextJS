@@ -52,21 +52,7 @@ const INPUT_STYLE = {
   width: "99%",
 };
 
-const { Sider, Content } = Layout;
-
-const redirect = (_data) => {
-  IdStorage.value = _data.id;
-  console.log('test data', _data)
-  window.location.reload(false);
-};
-
 const columns = [
-  // {
-  //   title: "ID",
-  //   dataIndex: "id",
-  //   width: "150px",
-  //   key: "1",
-  // },
   {
     title: "JUDUL",
     dataIndex: "title",
@@ -133,86 +119,14 @@ const columns = [
   },
 ];
 
-const items = [
-  {
-    key: 'sub1',
-    label: 'Home',
-    icon: <HomeOutlined color="#fff" />,
-  },
-  {
-    key: 'sub2',
-    label: 'Sub Menu',
-    icon: <AppstoreOutlined />,
-    children: [
-      {
-        key: '5',
-        label: 'Menu 1',
-        onClick: () => {
-          alert("Menu 1")
-        }
-      },
-      {
-        key: '6',
-        label: 'Menu 2',
-      },
-      {
-        key: 'sub3',
-        label: 'Sub Menu Lagi',
-        children: [
-          {
-            key: '7',
-            label: 'Menu 3',
-          },
-          {
-            key: '8',
-            label: 'Menu 4',
-          },
-        ],
-      },
-    ],
-  },
-  // {
-  //   type: 'divider',
-  // },
-  // {
-  //   key: 'sub4',
-  //   label: 'Navigation Three',
-  //   icon: <SettingOutlined />,
-  //   children: [
-  //     {
-  //       key: '9',
-  //       label: 'Option 9',
-  //     },
-  //     {
-  //       key: '10',
-  //       label: 'Option 10',
-  //     },
-  //     {
-  //       key: '11',
-  //       label: 'Option 11',
-  //     },
-  //     {
-  //       key: '12',
-  //       label: 'Option 12',
-  //     },
-  //   ],
-  // },
-  {
-    key: 'grp',
-    label: 'Group Menu',
-    type: 'group',
-    children: [
-      {
-        key: '13',
-        label: 'Group Menu 1',
-      },
-      {
-        key: '14',
-        label: 'Group Menu 2',
-      },
-    ],
-  },
-];
+
+const { Content } = Layout;
+
+const redirect = (_data) => {
+  IdStorage.value = _data.id;
+  console.log('test data', _data)
+  window.location.reload(false);
+};
 
 // const datas = JSON.stringify(data);
 const Index = ({ token }) => {
@@ -292,21 +206,6 @@ const Index = ({ token }) => {
       display: "flex",
       flexDirection: "column"
     }}>
-      <Layout style={{minHeight: '100vh'}}>
-        <Sider
-          // className="sidebar"
-          // breakpoint={"lg"}
-          className={classes.sidebar}
-          theme="light"
-          collapsedWidth={0}
-          trigger={null}
-          width={250}
-        >
-          <Menu
-            mode="inline"
-            items={items}
-          />
-        </Sider>
       <Layout>
       <Content style={{ minHeight: 280 }}>
       <div className={classes.filterWrapper}>
@@ -476,7 +375,6 @@ const Index = ({ token }) => {
         </Card>
       </div>
       </Content>
-      </Layout>
       </Layout>
     </div>
   );

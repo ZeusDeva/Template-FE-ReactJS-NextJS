@@ -12,7 +12,7 @@ import jwt_decode from "jwt-decode";
 
 import Dashboard from "../Dashboard/index";
 import Login from "../../containers/Login/index";
-import ReturnSurveyKYC from "../DetailForm";
+import DetailForm from "../DetailForm";
 import applicationStorage from "src/utils/application-storage";
 import idStorage from "src/utils/id-storage";
 
@@ -83,7 +83,7 @@ const Index = (props) => {
           {test3 ? (
             <>
               {test2 == undefined ? (
-                <ReturnSurveyKYC token={token} />
+                <DetailForm token={token} />
               ) : (
                 <Dashboard token={token} />
               )}
@@ -97,7 +97,7 @@ const Index = (props) => {
           {AuthStorage.loggedIn ? (
             <>
               {idStorage.data ? (
-                <ReturnSurveyKYC token={null} />
+                <DetailForm token={null} />
               ) : (
                 <Dashboard token={null} />
               )}
