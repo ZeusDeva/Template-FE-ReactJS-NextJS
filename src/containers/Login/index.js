@@ -39,11 +39,6 @@ const Login = ({ token }) => {
 
       if (response?.error == null) {
         setErrorAuth(false)
-        authStorage.value = {
-          "firstName": "Hafid",
-          "gender": "Male",
-          "token": token
-        }
         reloadPage()
       }
 

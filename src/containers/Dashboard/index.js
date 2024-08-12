@@ -44,6 +44,9 @@ import { dateParser } from "src/utils/tools";
 // Style
 import classes from "./style.module.less";
 
+import jwt_decode from "jwt-decode";
+import { useSession } from "next-auth/client";
+
 const propTypes = {};
 
 const defaultProps = {};
@@ -226,6 +229,8 @@ const Index = ({ token }) => {
   const [values, setValues] = useState();
   const selectorReset = false;
 
+  const [session, loadingSession] = useSession()
+
   const [query, setQuery] = useState("");
   
 	const data = useSelector((state) => state.data);
@@ -284,8 +289,42 @@ const Index = ({ token }) => {
 
   // first load
   useEffect(() => {
+    // kondisi dibawah untuk mengakomodir expired time dari session login
+    if(session){
+      const token = session.jwt
+      const decodedToken = jwt_decode(token); // Decode token untuk mendapatkan payload
+      const iat = decodedToken.iat; // Waktu token dibuat dalam detik sejak epoch (waktu sejak 1 Januari 1970)
+      const maxAge = 60; // Expired time dari session dalam itungan detik
+
+      // Konversi waktu kadaluwarsa dalam milidetik
+      const expTime = (iat + maxAge) * 1000;
+      const currentTime = Date.now();
+      const timeUntilExpiration = expTime - currentTime; // sisa waktu
+
+      const expDate = new Date((iat + maxAge) * 1000); // Waktu kadaluwarsa relatif terhadap `iat`
+      console.log("Token akan kadaluwarsa pada: ", expDate.toLocaleString());
+      console.log("Waktu tersisa: ", timeUntilExpiration);
+      console.log("Hasil decoded: ", decodedToken);
+
+      if (timeUntilExpiration > 0) {
+        console.log("Memeriksa token...");
+
+        // Set timer yg sesuai dgn expired time untuk memeriksa kadaluwarsa token
+        setTimeout(() => {
+          const newCurrentTime = Date.now() / 1000; // waktu saat ini
+          // Periksa apakah token sudah kedaluwarsa
+          if ((iat + maxAge) < newCurrentTime) {
+            console.log("Token telah kedaluwarsa.");
+          } else {
+            console.log("Token masih valid.");
+          }
+        }, timeUntilExpiration);
+      } else {
+        console.log("Tidak ada waktu kadaluwarsa yang tersisa");
+      }
+    }
     fetchData();
-  }, []);
+  }, [session]);
 
   return (
     <div style={{

@@ -26,7 +26,6 @@ const Index = (props) => {
   // const { query, asPath } = useRouter();
   // const [, token, params] = asPath.split("/");
   const [loading, setLoading] = useState(true);
-  const [tokenLogin, setTokenLogin] = useState(null);
   // const { data } = useSession()
   const [session, loadingSession] = useSession()
 
@@ -37,23 +36,18 @@ const Index = (props) => {
 
   console.log("data", application);
 
-  // untuk handle kondisi after login (exp: catch token login, etc)
   useEffect(() => {
     // jika berhasil login
     if(session) {
-    const token = session.jwt // ambil token jwt yang dikirim dari handler auth
-    setTokenLogin(token) // set token ke dalam useState untuk bisa digunakan
+      const token = session.jwt // ambil token jwt yang dikirim dari handler auth
 
-    console.log("data login: ", session);    
+      // console.log("data login: ", session);    
 
-    try{
-        const decoded = jwt_decode(token) // decoded token menjadi payload
-        // takeout key exp dan iat karena expired time
-        // karena sudah di setup di konfigurasi handler auth
-        delete decoded.exp
-        delete decoded.iat
-      }catch(e) {
-        console.log("Error pada saat decode token jwt: ", e)
+      // set data ke local storage ketika proses dari auth login valid
+      AuthStorage.value = {
+        "firstName": "Hafid",
+        "gender": "Male",
+        "token": token
       }
     }
   }, [session])
@@ -89,7 +83,7 @@ const Index = (props) => {
               )}
             </>
           ) : (
-            <Login token={tokenLogin} />
+            <Login />
           )}
         </>
       ) : (
@@ -103,7 +97,7 @@ const Index = (props) => {
               )}
             </>
           ) : (
-            <Login token={tokenLogin} />
+            <Login />
           )}
         </>
       )}

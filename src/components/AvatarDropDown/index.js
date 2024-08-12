@@ -10,6 +10,7 @@ import AuthStorage from "src/utils/auth-storage";
 import IdStorage from "src/utils/id-storage";
 // style
 import classes from "./style.module.less";
+import { signOut } from "next-auth/client";
 
 const propTypes = {
   style: PropTypes.object,
@@ -41,7 +42,11 @@ const AvatarDropDown = ({ style }) => {
     setVisible(false);
     AuthStorage.destroy();
     IdStorage.destroy();
-    Router.push("/");
+
+    // clear session next-auth
+    signOut({
+      callbackUrl: "/",
+    });
   };
 
   const menu = (
