@@ -177,7 +177,7 @@ const DetailForm = () => {
                 selectedKeys={[selectedKey]}
               />
             </Sider>
-            <Content>
+            <Content className={classes.detail}>
               <Layout style={{ padding: '0 24px', minHeight: '100vh' }}>
                 <Content
                   style={{
