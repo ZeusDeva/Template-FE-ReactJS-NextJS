@@ -124,7 +124,6 @@ const { Content } = Layout;
 
 const redirect = (_data) => {
   IdStorage.value = _data.id;
-  console.log('test data', _data)
   window.location.reload(false);
 };
 
@@ -155,11 +154,7 @@ const Index = ({ token }) => {
     category: row.category,
   }));
 
-  console.log("data", data);
-  console.log("rows", values);
-
   const fetchData = async () => {
-    console.log("data", data);
     try {
     	setPage(1);
     	setSize(10);
@@ -174,7 +169,6 @@ const Index = ({ token }) => {
 
   const handleApplicationSearch = async (e) => {
     setQuery(e.target.value)
-    console.log('testing dulu')
     try {
     	setPage(1);
     	setSize(10);

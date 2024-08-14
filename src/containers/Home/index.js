@@ -15,6 +15,9 @@ import Login from "../../containers/Login/index";
 import DetailForm from "../DetailForm";
 import applicationStorage from "src/utils/application-storage";
 import idStorage from "src/utils/id-storage";
+import { useDispatch, useSelector } from "react-redux";
+import LandingPage from "../LandingPage"
+import { setMenu } from "src/redux/actions/sidebarMenu";
 
 const antIcon = <LoadingOutlined style={{ fontSize: 40 }} spin />;
 
@@ -35,16 +38,12 @@ const Index = (props) => {
 
   const secret = process.env.NEXTAUTH_SECRET;
 
-  console.log("data", application);
-
   // untuk handle kondisi after login (exp: catch token login, etc)
   useEffect(() => {
     // jika berhasil login
     if(session) {
     const token = session.jwt // ambil token jwt yang dikirim dari handler auth
-    setTokenLogin(token) // set token ke dalam useState untuk bisa digunakan
-
-    console.log("data login: ", session);    
+    setTokenLogin(token) // set token ke dalam useState untuk bisa digunakan 
 
     try{
         const decoded = jwt_decode(token) // decoded token menjadi payload
@@ -58,13 +57,23 @@ const Index = (props) => {
     }
   }, [session])
 
-  console.log("bab", AuthStorage.loggedIn);
-
   const test = true;
   const test1 = true;
   const test2 = undefined;
   const test3 = false;
   const test4 = "sdfs";
+
+  const dispatch = useDispatch();
+	//for change view
+	const stateMenuSidebar = useSelector((state) => state.setMenu);
+	const selectedKey = stateMenuSidebar.selectedKey;
+
+  //to keep value menu when open detailform
+  useEffect(() => {
+    if (idStorage.data) {
+      dispatch(setMenu("2"))
+    }
+  }, [idStorage])
 
   return (
     <>
@@ -82,11 +91,16 @@ const Index = (props) => {
         <>
           {test3 ? (
             <>
-              {test2 == undefined ? (
-                <DetailForm token={token} />
-              ) : (
-                <Dashboard token={token} />
-              )}
+              {selectedKey == "1" && <LandingPage/>}
+              {selectedKey == "2" &&
+              <>{test2 == undefined ? (
+                    <DetailForm token={null} />
+                  ) : (
+                    <Dashboard token={null} />
+                  )
+                }
+              </>
+              }
             </>
           ) : (
             <Login token={tokenLogin} />
@@ -94,17 +108,22 @@ const Index = (props) => {
         </>
       ) : (
         <>
-          {AuthStorage.loggedIn ? (
-            <>
-              {idStorage.data ? (
-                <DetailForm token={null} />
-              ) : (
-                <Dashboard token={null} />
-              )}
-            </>
-          ) : (
-            <Login token={tokenLogin} />
-          )}
+          {selectedKey == "1" && <LandingPage/>}
+          {selectedKey == "2" && <>
+            {AuthStorage.loggedIn ? (
+              <>
+                {idStorage.data ? (
+                      <DetailForm token={null} />
+                    ) : (
+                      <Dashboard token={null} />
+                    )
+                }
+              </>
+            ) : (
+              <Login token={tokenLogin} />
+            )}
+          </>
+          }
         </>
       )}
     </>

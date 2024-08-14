@@ -53,30 +53,6 @@ const Login = ({ token }) => {
     }catch(e){
       console.log(e);
     }
-
-    // if(values.username = "test" && values.password != null){
-    //   try {
-    //     setLoading(true);
-    //     await dispatch(
-    //       await actionLoginTest({username: "emilys",
-    //       password: "emilyspass"})
-    //     );
-    //   } finally {
-    //     reloadPage();
-    //   }
-    // }else{
-    //   try {
-    //     setLoading(true);
-    //     await dispatch(
-    //       await actionLoginTest({username: "",
-    //       password: ""})
-    //     );
-    //   } finally {
-    //     // reloadPage();
-    //   }
-    // }
-    
-    // console.log("masukkk", values);
   };
 
   return (

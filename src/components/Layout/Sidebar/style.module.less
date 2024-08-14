@@ -1,0 +1,41 @@
+.sidebarWrapper {
+    z-index: 999;
+
+}
+
+.sidebar{
+	box-shadow: 1px 1px 20px rgba(94, 93, 93, 0.098);
+	// background-color: red;
+	border: none;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	top: 60px;
+}
+
+@media screen and (max-width: 990px) {
+	.sidebar {
+		display: none;
+	}
+    .sidebarHeader {
+        display: none;
+    }
+}
+
+.sidebarHeader {
+    background-color: #003D79;
+    width: 250px;
+    padding: 10px;
+    padding-left: 20px;
+    height: 60px;
+    z-index: 999;
+    position: fixed;
+    top: 0;
+}
+
+.sidebarfooter {
+	color: #75BAFF;
+	padding: 10px;
+	bottom: 0;
+	position: fixed;
+}

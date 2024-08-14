@@ -8,7 +8,6 @@ import { useState, useEffect } from "react";
 export default function Home() {
 
 const categorySelector = useSelector((state) => state.categorySelector);
-console.log('isinya apa ini??', categorySelector)
 console.log(typeof categorySelector) //typeOf = object
 const [categoryOptions, setCategoryOptions] = useState([]);
 
@@ -21,8 +20,6 @@ useEffect(() => {
 		const options = categorySelector.category.map((category) => ({
 			value: category
 		}));
-	
-		console.log('Category Options = ', options)
 		setCategoryOptions(options)
 	} else {
 		console.error('Category Error')

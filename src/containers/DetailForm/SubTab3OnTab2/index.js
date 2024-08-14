@@ -10,7 +10,6 @@ import InputCurrency from "src/components/Input/Currency";
 export default function Home() {
 
 const categorySelector = useSelector((state) => state.categorySelector);
-// console.log('isinya apa ini??', categorySelector)
 // console.log(typeof categorySelector) //typeOf = object
 const [categoryOptions, setCategoryOptions] = useState([]);
 

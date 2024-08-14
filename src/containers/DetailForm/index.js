@@ -8,7 +8,6 @@ import {
   Table,
   Tabs,
   Spin,
-  Menu,
 } from "antd";
 // import moment from "moment";
 import { useEffect, useState } from "react";
@@ -30,87 +29,60 @@ import {
 import ApplicationDetail from "src/containers/DetailForm/ApplicationDetail";
 import {actionFetchDataById} from "src/redux/actions/data";
 import { actionGetProductCategoryList } from "src/redux/actions/categorySelector";
-
 import ApplicationStorage from "src/utils/application-storage";
 // import authStorage from "src/utils/auth-storage";
 import IdStorage from "src/utils/id-storage";
 // import { checkRtreMandatory, timeout, intermittenRtre } from "src/utils/tools";
 import CollapseForm from "./CollapseForm";
 
-// Icons
-import {
-  CaretDownOutlined,
-  EditOutlined,
-  SlidersOutlined,
-  AppstoreOutlined,
-  HomeOutlined,
-  SettingOutlined
-} from "@ant-design/icons";
-
 // Style
 import classes from "./style.module.less";
 import applicationStorage from "src/utils/application-storage";
-import Layout, { Content } from "antd/lib/layout/layout";
-import Sider from "antd/lib/layout/Sider";
 
-//menu sidebar
-const items = [
-  {
-    key: "1",
-    label: 'Detail Application',
-    icon: <HomeOutlined color="#fff" />,
-  },
-  {
-    key: "2",
-    label: 'TAB 1',
-    icon: <AppstoreOutlined />,
-  },
-  {
-    key: "3",
-    label: 'TAB 2',
-    icon: <AppstoreOutlined />,
-    
-  },
-];
+//redux
 
-const tab1 = [
+const { TabPane } = Tabs;
+const { Panel } = Collapse;
+
+const tabs = [
   {
-    tab: "Input",
+    tab: "Home",
     collapses: TAB_FORM_1,
   },
   {
-    tab: "Picker",
+    tab: "Customer Handling",
     collapses: TAB_FORM_2,
-  }
-];
-
-const tab2 = [
+  },
   {
-    tab: "List",
+    tab: "Data Entry Completion",
     collapses: TAB_FORM_3,
   },
   {
-    tab: "Info",
+    tab: "Simulation",
     collapses: TAB_FORM_4,
   },
 ];
 
-const DetailForm = () => {
+const subtabs = [
+  {
+    key: "telesurvey",
+    subtab: "Tele Survey",
+    // subcollapses: TELE_SURVEY_FORMS,
+  },
+  {
+    key: "silentsurvey",
+    subtab: "Silent Survey",
+    // subcollapses: SILENT_SURVEY_FORMS,
+  },
+];
+
+const ReturnSurveyKYC = () => {
   const dispatch = useDispatch();
+  //   const state = useSelector((state) => state.debitur);
   const id = IdStorage.data;
   const [loading, setLoading] = useState(false);
+  //   const { validasiKonfirmasi } = useSelector((state) => state.rtre);
   const [loadingSubmit, setLoadingSubmit] = useState(false);
-
-  //for change view
-  const [selectedKey, setSelectedKey] = useState('1');
-  const handleMenuClick = (e) => {
-    setSelectedKey(e.key);
-    console.log(e)
-  };
-
-  useEffect( () => {
-		console.log(selectedKey);
-	}, [selectedKey]);
 
   const columns = [
     { title: "Nama Field", dataIndex: "field", key: "field" },
@@ -121,6 +93,8 @@ const DetailForm = () => {
    const application = applicationStorage.data;
 
   const [form] = Form.useForm();
+
+  //   let { calculation_structure_credit } = object_pembiayaan || {};
 
   const btnSubmit = async () => {
     // reloadPage();
@@ -136,7 +110,6 @@ const DetailForm = () => {
   const data = useSelector((state) => state.data);
   const products = data?.products?.products;
   ApplicationStorage.value = data
-  console.log("data", data);
 
   const fetchData = async () => {
 		try {
@@ -152,71 +125,45 @@ const DetailForm = () => {
 		fetchData({id: id});
 	}, [id]);
 
-  useEffect(() => {
-    console.log('data id', localStorage.getItem("ORDERID"))
-  }, [])
-
   return (
     <Form layout="vertical">
       {!loading ? (
         <>
-          <Layout>
-            <Sider
-                // className="sidebar"
-                // breakpoint={"lg"}
-                className={classes.sidebar}
-                theme="light"
-                collapsedWidth={0}
-                trigger={null}
-                width={250}
+          <ApplicationDetail application={data} personal={data} />
+          <CollapseForm
+            tabs={tabs}
+            // subtabs={subtabs}
+            // state={state}
+            // personal={personal}
+            // application={application}
+          />
+          <Card className={classes.card}>
+            <Button
+              className={classes.cancelButton}
+              type="secondary"
+              onClick={backToDashboard}
+              loading={loading}
             >
-              <Menu
-                mode="inline"
-                items={items}
-                onClick={handleMenuClick}
-                selectedKeys={[selectedKey]}
-              />
-            </Sider>
-            <Content className={classes.detail}>
-              <Layout style={{ padding: '0 24px', minHeight: '100vh' }}>
-                <Content
-                  style={{
-                    padding: 24,
-                    margin: 0,
-                    minHeight: 280,
-                  }}
-                >
-                  {selectedKey == '1' && <ApplicationDetail application={data} personal={data} />}
-                  {selectedKey == '2' && <CollapseForm tabs={tab1}></CollapseForm>}
-                  {selectedKey == '3' && <CollapseForm tabs={tab2}></CollapseForm>}
-                </Content>
-              </Layout>
-              <Card className={classes.card}>
-                <Button
-                  className={classes.cancelButton}
-                  type="secondary"
-                  onClick={backToDashboard}
-                  loading={loading}
-                >
-                  Cancel
-                </Button>
-                <Button
-                  type="success"
-                  onClick={btnSubmit}
-                  loading={loadingSubmit || loading}
-                  // disabled={submitButton}
-                >
-                  Submit
-                </Button>
-              </Card>
-              <Modal
-                title="Data Sedang Di Proses Mohon Ditunggu"
-                // visible={getModal}
-                footer={false}
-                closable={false}
-              ></Modal>
-            </Content>
-          </Layout>
+              Cancel
+            </Button>
+            <Button
+              type="success"
+              onClick={btnSubmit}
+              loading={loadingSubmit || loading}
+              // disabled={submitButton}
+            >
+              Submit
+            </Button>
+          </Card>
+
+          <Modal></Modal>
+
+          <Modal
+            title="Data Sedang Di Proses Mohon Ditunggu"
+            // visible={getModal}
+            footer={false}
+            closable={false}
+          ></Modal>
         </>
       ) : (
         <div className={classes.spinneroverlay}>
@@ -227,6 +174,6 @@ const DetailForm = () => {
   );
 };
 
-DetailForm.propTypes = {};
+ReturnSurveyKYC.propTypes = {};
 
-export default DetailForm;
+export default ReturnSurveyKYC;

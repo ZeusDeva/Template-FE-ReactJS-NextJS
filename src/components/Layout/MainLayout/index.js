@@ -1,5 +1,4 @@
-import { BackTop, Layout } from "antd";
-import Image from "next/image";
+import { BackTop, Image, Layout, Menu } from "antd";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import PropTypes from "prop-types";
@@ -15,9 +14,16 @@ import AuthStorage from "src/utils/auth-storage";
 import ArrowLeftIcon from "public/svg/arrow-left.svg";
 // constants
 // import { ROUTES, SUB_ROUTES } from "src/constants/routes";
+
 // style
 import classes from "./style.module.less";
 import { useEffect, useState } from "react";
+
+//sidebar
+import Sidebar from "../Sidebar";
+import { setMenu } from "src/redux/actions/sidebarMenu";
+import { useDispatch, useSelector } from "react-redux";
+import { sidebarMenu } from "src/constants/sidebarMenu";
 
 // Data
 const { Content } = Layout;
@@ -31,9 +37,14 @@ const defaultProps = {
 };
 
 const MainLayout = (props) => {
+  const dispatch = useDispatch();
   const { children } = props;
   const { query, asPath } = useRouter();
   const [, token, params] = asPath.split("/");
+
+  //for change view
+  const stateMenuSidebar = useSelector((state) => state.setMenu);
+  const selectedKey = stateMenuSidebar.selectedKey;
 
   // const [darkMode, setDarkMode] = useState(false);
 
@@ -63,12 +74,7 @@ const MainLayout = (props) => {
               <Link href="/">
                 <a>
                   <div className={classes.logo}>
-                    <Image
-                      src="/images/logo.png"
-                      alt="Logo"
-                      width={80}
-                      height={40}
-                    />
+                    <Image src={'/svg/muf_logo.svg'} preview={false}/>
                   </div>
                 </a>
               </Link>
@@ -78,14 +84,12 @@ const MainLayout = (props) => {
                   <AvatarDropDown />
                 </div>
               )}
-              {/* <Switch 
-              checkedChildren='Dark'
-              unCheckedChildren='Light'
-              onChange={toggleDarkMode}
-              checked={darkMode}
-              className="classes.darkModeToggle"
-              /> */}
             </Header>
+          </>
+        )}
+        {AuthStorage.loggedIn && (
+          <>
+            <Sidebar/>
           </>
         )}
         <Content className={token ? classes.contentoken : classes.content}>

@@ -90,23 +90,6 @@ const MyApp = (props) => {
     setAwaitLoading(false);
   }, []);
 
-  // useAsync(async () => {
-  // 	if(token && !AuthStorage.validToken(token)) {
-  // 		console.log(token);
-  // 		AuthStorage.destroy();
-  // 		setAwaitLoading(false);
-  // 		router.push('/login?token='+ token);
-  // 	}
-  // 	if (
-  // 		!AuthStorage.loggedIn &&
-  // 		typeof window !== 'undefined' &&
-  // 		!urlsIgnore.includes(router.pathname)
-  // 	) {
-  // 		setAwaitLoading(false);
-  // 		router.push('/login');
-  // 	}
-  // }, [router.pathname]);
-
   return (
     <Layout>
       <Head>

@@ -16,9 +16,6 @@ export default function Home(props) {
   const price = data?.products?.price
   const rating = data?.products?.rating
 
-  // console.log('data?', data
-  // console.log('kalo ini apa', data?.products?.brand)
-
   return (
     <div className={styles.container}>
       <Head>

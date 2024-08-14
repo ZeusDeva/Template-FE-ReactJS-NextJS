@@ -7,7 +7,6 @@ import authStorage from "src/utils/auth-storage";
 const { API_URL, AUTH_DUMMY } = LINK;
 
 export const actionLoginTest = async (payload = {}, next = (f) => f) => {
-  console.log("PAYYY", payload);
     const url = AUTH_DUMMY + "/auth/login";
     return{
         type: SINGLE_API,
@@ -36,39 +35,9 @@ export const actionLoginTest = async (payload = {}, next = (f) => f) => {
           },
 		    },
     }
-  //   if (process.env.NEXT_ENV === "production") url = AUTH_URL + "/auth/login";
-  // console.log("uri yriii",url);
-  // if (value != null) {
-  //   console.log("benar", value);
-  //   return {
-  //     type: "LOGIN_SUCCESS",
-  //     payload: value,
-  //   };
-  // } else {
-  //   console.log("salah");
-  //   return {
-  //     type: "LOGIN_FAILED",
-  //     payload: value,
-  //     message: "Oops!",
-  //   };
-  // }
 };
 
 export const actionTokenLoginTest = async (payload = {}, next = (f) => f) => {
-  // if (value != null) {
-  //   console.log("benar",value);
-  //   return {
-  //     type: "LOGIN_SUCCESS",
-  //     payload: value,
-  //   };
-  // } else {
-  //   console.log("salah");
-  //   return {
-  //     type: "LOGIN_FAILED",
-  //     payload: value,
-  //     message: "Oops!",
-  //   };
-  // }
   let url = AUTH_DUMMY + '/auth/login';
 	// if (process.env.NEXT_ENV === 'production') url = AUTH_URL + '/auth/login';
 	return {

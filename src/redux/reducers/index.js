@@ -3,17 +3,20 @@ import { combineReducers } from "redux";
 import auth, { initialState as authInitial } from "./auth";
 import data, { initialState as dataInitial } from "./data";
 import categorySelector, { initialState as categorySelectorInitial } from "./categorySelector";
+import setMenu, {initialState as menuInitial} from "./sidebarMenu";
 
 export const initialState = {
   auth: authInitial,
   data: dataInitial,
   categorySelector: categorySelectorInitial,
+  setMenu: menuInitial,
 };
 
 const appReducer = combineReducers({
   auth,
   data,
   categorySelector,
+  setMenu
 });
 
 const reducers = (state, action) => {

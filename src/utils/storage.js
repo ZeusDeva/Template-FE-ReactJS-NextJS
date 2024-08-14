@@ -26,7 +26,6 @@ export default class Storage {
   //   jsonUser = JSON.stringify(user);
 
   set value(value) {
-    console.log("cek", JSON.stringify(value));
     if (typeof window !== "undefined") {
       localStorage.setItem(this.#name, JSON.stringify(value));
     }
