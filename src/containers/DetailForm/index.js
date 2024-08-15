@@ -63,20 +63,7 @@ const tabs = [
   },
 ];
 
-const subtabs = [
-  {
-    key: "telesurvey",
-    subtab: "Tele Survey",
-    // subcollapses: TELE_SURVEY_FORMS,
-  },
-  {
-    key: "silentsurvey",
-    subtab: "Silent Survey",
-    // subcollapses: SILENT_SURVEY_FORMS,
-  },
-];
-
-const ReturnSurveyKYC = () => {
+const DetailForm = () => {
   const dispatch = useDispatch();
   //   const state = useSelector((state) => state.debitur);
   const id = IdStorage.data;
@@ -174,6 +161,6 @@ const ReturnSurveyKYC = () => {
   );
 };
 
-ReturnSurveyKYC.propTypes = {};
+DetailForm.propTypes = {};
 
-export default ReturnSurveyKYC;
+export default DetailForm;

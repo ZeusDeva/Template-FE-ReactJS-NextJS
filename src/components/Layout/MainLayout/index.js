@@ -60,6 +60,8 @@ const MainLayout = (props) => {
   //   setDarkMode(!darkMode)
   // }
 
+  console.log("apa nih? ", (AuthStorage.loggedIn ? "muncul" : "oora"))
+
   return (
     <>
       <Layout

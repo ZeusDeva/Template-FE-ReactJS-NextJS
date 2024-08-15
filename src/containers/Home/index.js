@@ -108,21 +108,23 @@ const Index = (props) => {
         </>
       ) : (
         <>
-          {selectedKey == "1" && <LandingPage/>}
-          {selectedKey == "2" && <>
-            {AuthStorage.loggedIn ? (
+          {AuthStorage.loggedIn ? (
+            <>
+            {selectedKey == "1" && <LandingPage/>}
+            {selectedKey == "2" && 
               <>
                 {idStorage.data ? (
-                      <DetailForm token={null} />
-                    ) : (
-                      <Dashboard token={null} />
-                    )
+                          <DetailForm token={null} />
+                        ) : (
+                          <Dashboard token={null} />
+                        )
                 }
               </>
+            }
+            </>
             ) : (
               <Login token={tokenLogin} />
-            )}
-          </>
+            )
           }
         </>
       )}
