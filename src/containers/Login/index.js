@@ -2,11 +2,12 @@ import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Spin, Typography } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { signIn } from "next-auth/client"
+import { signIn } from "next-auth/client";
 import authStorage from "src/utils/auth-storage";
 
 // Style
 import classes from "./style.module.less";
+import { setLogin } from "src/redux/actions/sidebarMenu";
 
 const propTypes = {};
 
@@ -28,29 +29,30 @@ const Login = ({ token }) => {
   };
 
   const onFinish = async (values) => {
-    const { username, password } = values
+    const { username, password } = values;
 
-    try{
+    try {
       const response = await signIn("credentials", {
         username,
         password,
         redirect: false,
-      })
+      });
 
       if (response?.error == null) {
-        setErrorAuth(false)
+        setErrorAuth(false);
         authStorage.value = {
-          "firstName": "Hafid",
-          "gender": "Male",
-          "token": token
-        }
-        reloadPage()
+          firstName: "Hafid",
+          gender: "Male",
+          token: token,
+        };
+        // reloadPage();
+        dispatch(setLogin(true));
       }
 
       if (!response.ok) {
-        setErrorAuth(true)
+        setErrorAuth(true);
       }
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
   };
@@ -80,7 +82,11 @@ const Login = ({ token }) => {
               size="large"
             >
               <div className="has-underline mb-3">
-                {errorAuth ? <p style={{ color: "red" }}>LOGIN GAGAL !!</p> : ""}
+                {errorAuth ? (
+                  <p style={{ color: "red" }}>LOGIN GAGAL !!</p>
+                ) : (
+                  ""
+                )}
                 <Title level={3}>Log Into My Account</Title>
                 <div className={classes.spacer} />
               </div>

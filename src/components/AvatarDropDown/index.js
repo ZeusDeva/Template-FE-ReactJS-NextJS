@@ -10,6 +10,8 @@ import AuthStorage from "src/utils/auth-storage";
 import IdStorage from "src/utils/id-storage";
 // style
 import classes from "./style.module.less";
+import { setLogin } from "src/redux/actions/sidebarMenu";
+import { useDispatch } from "react-redux";
 
 const propTypes = {
   style: PropTypes.object,
@@ -20,9 +22,10 @@ const defaultProps = {
 };
 
 const AvatarDropDown = ({ style }) => {
+  const dispatch = useDispatch();
   const [visible, setVisible] = useState(false);
 
-  const { firstName,gender, iamResult } = AuthStorage.data || {};
+  const { firstName, gender, iamResult } = AuthStorage.data || {};
   const { resultUserProfileLocation } = iamResult || {};
   // const userBranch =
   // 	resultUserProfileLocation?.find(
@@ -42,6 +45,7 @@ const AvatarDropDown = ({ style }) => {
     AuthStorage.destroy();
     IdStorage.destroy();
     Router.push("/");
+    dispatch(setLogin(false));
   };
 
   const menu = (

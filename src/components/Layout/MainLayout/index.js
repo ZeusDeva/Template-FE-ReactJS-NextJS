@@ -45,7 +45,20 @@ const MainLayout = (props) => {
   //for change view
   const stateMenuSidebar = useSelector((state) => state.setMenu);
   const selectedKey = stateMenuSidebar.selectedKey;
+  const statePath = stateMenuSidebar.page;
+  const [statePage, setStatePage] = useState(false);
 
+  const auth = AuthStorage.loggedIn;
+
+  useEffect(() => {
+    if (auth && statePath) {
+      setStatePage(true);
+    } else {
+      setStatePage(false);
+    }
+  }, [auth, statePath]);
+
+  console.log(statePage, statePath);
   // const [darkMode, setDarkMode] = useState(false);
 
   // useEffect(() => {
@@ -60,7 +73,7 @@ const MainLayout = (props) => {
   //   setDarkMode(!darkMode)
   // }
 
-  console.log("apa nih? ", (AuthStorage.loggedIn ? "muncul" : "oora"))
+  console.log("apa nih? ", AuthStorage.loggedIn ? "muncul" : "oora");
 
   return (
     <>
@@ -76,7 +89,7 @@ const MainLayout = (props) => {
               <Link href="/">
                 <a>
                   <div className={classes.logo}>
-                    <Image src={'/svg/muf_logo.svg'} preview={false}/>
+                    <Image src={"/svg/muf_logo.svg"} preview={false} />
                   </div>
                 </a>
               </Link>
@@ -91,10 +104,12 @@ const MainLayout = (props) => {
         )}
         {AuthStorage.loggedIn && (
           <>
-            <Sidebar/>
+            <Sidebar />
           </>
         )}
-        <Content className={token ? classes.contentoken : classes.content}>
+        <Content
+          className={!statePage ? classes.contentlogin : classes.content}
+        >
           {children}
         </Content>
       </Layout>
