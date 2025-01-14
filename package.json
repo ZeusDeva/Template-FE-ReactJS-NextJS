@@ -22,6 +22,7 @@
     "@ant-design/icons": "^4.7.0",
     "@ant-design/plots": "^1.0.9",
     "antd": "^4.16.13",
+    "axios": "^0.26.0",
     "classnames": "^2.3.1",
     "common-base64-downloader-react": "^1.0.7",
     "dayjs": "^1.10.7",

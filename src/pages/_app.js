@@ -107,12 +107,12 @@ const MyApp = (props) => {
 
   return (
     <Layout>
-      <Head>
+      {/* <Head>
         <meta
           name="viewport"
           content="width=device-width, initial-scale=1, shrink-to-fit=no, height=device-height, user-scalable=0"
         />
-      </Head>
+      </Head> */}
       <ConfigProvider form={{ validateMessages }}>
         <Component {...pageProps} router={router} />
       </ConfigProvider>

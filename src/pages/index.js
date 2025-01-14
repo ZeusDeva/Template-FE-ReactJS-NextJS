@@ -1,10 +1,10 @@
-import Home from "../containers/Home";
+import AccessDeniedPage from '../pages/noAuth'
 
 const propTypes = {};
 
 const defaultProps = {};
 
-const HomePage = () => <Home />;
+const HomePage = () => <AccessDeniedPage />;
 
 HomePage.propTypes = propTypes;
 

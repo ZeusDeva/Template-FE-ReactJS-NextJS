@@ -59,7 +59,7 @@ const MainLayout = (props) => {
       >
         {!token && (
           <>
-            <Header>
+            {/* <Header>
               <Link href="/">
                 <a>
                   <div className={classes.logo}>
@@ -85,7 +85,7 @@ const MainLayout = (props) => {
               // checked={darkMode}
               // className="classes.darkModeToggle"
               />
-            </Header>
+            </Header> */}
           </>
         )}
         <Content className={token ? classes.contentoken : classes.content}>

@@ -2,40 +2,56 @@ import LINK from "src/constants/urls";
 import Storage from "src/utils/storage";
 import { SINGLE_API } from "./types";
 import authStorage from "src/utils/auth-storage";
+import axios from "axios";
 // import { notification } from "antd";
 
 const { API_URL, AUTH_DUMMY } = LINK;
 
+export const authToken = async (payload = {}, next = (f) => f) => {
+  // console.log("Payload", payload)
+  const authData = await axios.post(
+    process.env.AUTH_URI + "/api/skeleton-acq/checkToken",
+    {},
+    {
+      headers: {
+        Authorization: "Bearer " + payload,
+      },
+    }
+  );
+  return {
+    authData,
+  };
+};
+
 export const actionLoginTest = async (payload = {}, next = (f) => f) => {
   console.log("PAYYY", payload);
-    const url = AUTH_DUMMY + "/auth/login";
-    return{
-        type: SINGLE_API,
-        payload: {
-          url,
-          options: { method: "POST" },
-          payload,
-          errorType: 'LOGIN_FAILED',
-          successType: 'LOGIN_SUCCESS',
-          next: async (err, response = {}) => {
-            if (!err) {
-              const { status } = response;
-              if(status && status.responseCode) {
-                if (process.browser) {
-                  notification.error({
-                    message: "Oops!",
-                    description: status.responseDesc,
-                  });
-                }
-              }
-              else {
-                authStorage.value = response;
-              }
+  const url = AUTH_DUMMY + "/auth/login";
+  return {
+    type: SINGLE_API,
+    payload: {
+      url,
+      options: { method: "POST" },
+      payload,
+      errorType: "LOGIN_FAILED",
+      successType: "LOGIN_SUCCESS",
+      next: async (err, response = {}) => {
+        if (!err) {
+          const { status } = response;
+          if (status && status.responseCode) {
+            if (process.browser) {
+              notification.error({
+                message: "Oops!",
+                description: status.responseDesc,
+              });
             }
-            next(err, response);
-          },
-		    },
-    }
+          } else {
+            authStorage.value = response;
+          }
+        }
+        next(err, response);
+      },
+    },
+  };
   //   if (process.env.NEXT_ENV === "production") url = AUTH_URL + "/auth/login";
   // console.log("uri yriii",url);
   // if (value != null) {
@@ -69,35 +85,34 @@ export const actionTokenLoginTest = async (payload = {}, next = (f) => f) => {
   //     message: "Oops!",
   //   };
   // }
-  let url = AUTH_DUMMY + '/auth/login';
-	// if (process.env.NEXT_ENV === 'production') url = AUTH_URL + '/auth/login';
-	return {
-		type: SINGLE_API,
-		payload: {
-			url,
-			options: { method: 'POST' },
-			payload,
-			errorType: 'LOGIN_FAILED',
-			successType: 'LOGIN_SUCCESS',
-			next: async (err, response = {}) => {
-				if (!err) {
-					const { status } = response;
-					if(status && status.responseCode) {
-						if (process.browser) {
-							notification.error({
-								message: "Oops!",
-								description: status.responseDesc,
-							});
-						}
-					}
-					else {
-						authStorage.value = response;
-					}
-				}
-				next(err, response);
-			},
-		},
-	};
+  let url = AUTH_DUMMY + "/auth/login";
+  // if (process.env.NEXT_ENV === 'production') url = AUTH_URL + '/auth/login';
+  return {
+    type: SINGLE_API,
+    payload: {
+      url,
+      options: { method: "POST" },
+      payload,
+      errorType: "LOGIN_FAILED",
+      successType: "LOGIN_SUCCESS",
+      next: async (err, response = {}) => {
+        if (!err) {
+          const { status } = response;
+          if (status && status.responseCode) {
+            if (process.browser) {
+              notification.error({
+                message: "Oops!",
+                description: status.responseDesc,
+              });
+            }
+          } else {
+            authStorage.value = response;
+          }
+        }
+        next(err, response);
+      },
+    },
+  };
 };
 
 // export const actionLogin = async (payload = {}, next = (f) => f) => {
